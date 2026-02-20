@@ -1,0 +1,11 @@
+[Unit]
+Description=uWSGI Emperor Service
+After=syslog.target
+[Service]
+RuntimeDirectory=uwsgi
+ExecStart=/usr/bin/uwsgi --emperor /etc/uwsgi/sites
+Restart=always
+Type=simple
+[Install]
+WantedBy=multi-user.target
+
