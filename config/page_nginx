@@ -1,6 +1,9 @@
 server {
     listen 80;
     server_name xn--nronyolu-n4a.com www.xn--nronyolu-n4a.com;
+    location /static/ {
+        alias /var/www/forDODROPLET/static/;
+}
     location / {
         include
         uwsgi_params;
