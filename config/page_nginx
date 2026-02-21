@@ -1,13 +1,39 @@
 server {
-    listen 80;
     server_name xn--nronyolu-n4a.com www.xn--nronyolu-n4a.com;
     location /static/ {
-        alias /var/www/forDODROPLET/static/;
+        alias /var/www/forDODROPLETNEW/static/;
 }
     location / {
         include
         uwsgi_params;
-        uwsgi_pass unix:/run/uwsgi/forDODROPLET.socket;
+        uwsgi_pass unix:/run/uwsgi/forDODROPLETNEW.socket;
     }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/xn--nronyolu-n4a.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/xn--nronyolu-n4a.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
 }
 
+server {
+    if ($host = www.xn--nronyolu-n4a.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = xn--nronyolu-n4a.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name xn--nronyolu-n4a.com www.xn--nronyolu-n4a.com;
+    return 404; # managed by Certbot
+
+
+
+
+}
